@@ -1,0 +1,26 @@
+---
+title: "Date_map"
+author: "Jojo"
+date: "2025-02-25"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(lubridate)
+library(purrr)
+```
+
+
+```{r}
+#1.
+date <- seq(ymd("2015-01-01"), ymd("2025-12-31"), by="2 months")
+data.frame(year = year(date),
+           quart = quarter(date),
+           iso = isoweek(date)
+           )
+```
+
