@@ -2,7 +2,9 @@
 title: "Date_map"
 author: "Jojo"
 date: "2025-02-25"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -17,7 +19,7 @@ library(tidyverse)
 
 
 ```{r}
-#1.
+#1.Wrote this code and used the data.frame command to present it well
 date <- seq(ymd("2015-01-01"), ymd("2025-12-31"), by="2 months")
 data.frame(year = year(date),
            quart = quarter(date),
@@ -26,6 +28,7 @@ data.frame(year = year(date),
 ```
 
 ```{r}
+#2. We wanted to take the sample dates and show the difference so we created a function to take the beginning and end of those dates to get the difference
 sample_dates <- c("2018-03-15", "2020-07-20", "2023-01-10", "2025-09-05")
 date_diffs <- tibble(
   start = sample_dates,
@@ -39,6 +42,7 @@ date_diffs <- tibble(
 date_diffs
 ```
 ```{r}
+#3. We took the numbers from the list and just simply used the mean, median and sd functions to find the outcome and present it in a data frame.
 num_lists <- list(c(4, 16, 25, 36, 49), c(2.3, 5.7, 8.1, 11.4), c(10, 20, 30, 40, 50))
 
 statis <- list(
@@ -47,5 +51,23 @@ statis <- list(
   dev = map_dbl(num_lists, sd)
 )
 data.frame(statis)
+```
+```{r}
+#4. We had to use the possibly function to safely convert these all to the date format.  Then we created an if else function to extract the month from the dates given AFTER we formatted it with the parse_date_time command.
+date_strings <- list("2023-06-10", "2022/12/25", "15-Aug-2021", "InvalidDate")
+safe_parse_date <- possibly(function(x) {
+  parse_date_time(x, orders = c("ymd", "mdy", "dmy", "d-b-Y"))
+}, otherwise = NA)
+
+parsed_dates <- map(date_strings, safe_parse_date)
+month_names <- map_chr(parsed_dates, function(dt) {
+  if (is.na(dt)) {
+    NA_character_  
+  } else {
+    format(dt, "%B")  
+  }
+})
+
+month_names
 ```
 
