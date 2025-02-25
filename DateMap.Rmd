@@ -40,5 +40,12 @@ date_diffs
 ```
 ```{r}
 num_lists <- list(c(4, 16, 25, 36, 49), c(2.3, 5.7, 8.1, 11.4), c(10, 20, 30, 40, 50))
+
+statis <- list(
+  avg = map_dbl(num_lists, mean),
+  med = map_dbl(num_lists, median),
+  dev = map_dbl(num_lists, sd)
+)
+data.frame(statis)
 ```
 
